@@ -6,24 +6,30 @@ namespace RPG {
     {
         [SerializeField] float playerMoveSpeed;
         [SerializeField] float playerRotationSpeed;
+        [SerializeField] float gravity = 10f;
 
+        CharacterController controller;
         CinemachineCam cinemachineCam;
         CharacterInput input;
         Animator anim;
 
+        float currentVerticalSpeed;
         float currentSpeed;
         float desiredSpeed;
         const float acceleration = 20f;
-        const float decelaration = 100f;
+        const float decelaration = 10f;
+        const float walkSpeed = 5f;
+        const float runSpeed = 14f;
         float accMultiplier;
 
         readonly int speedFloat = Animator.StringToHash("SpeedFloat");
 
         private void Awake()
         {
+            controller = GetComponent<CharacterController>();
             input = GetComponent<CharacterInput>();
             anim = GetComponent<Animator>();
-            cinemachineCam = GetComponent<CinemachineCam>();
+            cinemachineCam = Camera.main.GetComponent<CinemachineCam>();
         }
 
         // Start is called before the first frame update
@@ -42,12 +48,25 @@ namespace RPG {
         {
             HandleMovement();
             HandleRotation();
+            HandleGravity();
+        }
+
+        private void OnAnimatorMove()
+        {
+            Vector3 movement = anim.deltaPosition;
+            movement += currentVerticalSpeed * Vector3.up * Time.fixedDeltaTime;
+            controller.Move(movement);
+        }
+
+        void HandleGravity()
+        {
+            currentVerticalSpeed = -gravity;
         }
 
         private void HandleRotation()
         {
             //The rotation main camera is making with world V3 forward
-            Vector3 cameraRotationWithWorld = Quaternion.Euler(0, cinemachineCam.cineCam.m_XAxis.Value, 0) * Vector3.forward;
+            Vector3 cameraRotationWithWorld = Quaternion.Euler(0, cinemachineCam.CineCam.m_XAxis.Value, 0) * Vector3.forward;
 
             //find out the rotation that the direction vector makes with world V3 forward
             Vector3 direction = input.GetInput.normalized;
@@ -74,7 +93,9 @@ namespace RPG {
         private void HandleMovement()
         {
             Vector3 direction = input.GetInput.normalized;
+            
             accMultiplier = (input.IsInput) ? acceleration : decelaration;
+            playerMoveSpeed = (input.CanSprint) ? runSpeed : walkSpeed;
 
             desiredSpeed = direction.magnitude * playerMoveSpeed;
             currentSpeed = Mathf.MoveTowards(currentSpeed, desiredSpeed, Time.fixedDeltaTime * accMultiplier);

@@ -6,7 +6,17 @@ using Cinemachine;
 namespace RPG {
     public class CinemachineCam : MonoBehaviour
     {
-        public CinemachineFreeLook cineCam;
+        [SerializeField]
+        CinemachineFreeLook cineCam;
+
+        public CinemachineFreeLook CineCam
+        {
+            get
+            {
+                return cineCam;
+            }
+        }
+
         // Start is called before the first frame update
         void Start()
         {
