@@ -10,6 +10,14 @@ namespace RPG {
                 return input;
             }
         }
+
+        public bool IsInput
+        {
+            get
+            {
+                return !Mathf.Approximately(input.magnitude, 0f);
+            }
+        }
         // Update is called once per frame
         void Update()
         {

@@ -8,15 +8,25 @@ namespace RPG {
     {
         [SerializeField] float playerMoveSpeed;
         [SerializeField] float playerRotationSpeed;
+        
         Camera mainCam;
-
         CharacterInput input;
         CharacterController controller;
+        Animator anim;
+
+        float currentSpeed;
+        float desiredSpeed;
+        const float acceleration = 20f;
+        const float decelaration = 100f;
+        float accMultiplier;
+
+        readonly int speedFloat = Animator.StringToHash("SpeedFloat");
 
         private void Awake()
         {
             controller = GetComponent<CharacterController>();
             input = GetComponent<CharacterInput>();
+            anim = GetComponent<Animator>();
             mainCam = Camera.main;
         }
 
@@ -39,14 +49,18 @@ namespace RPG {
 
         private void HandleRotation()
         {
-            Vector3 direction = input.GetInput;
-            Quaternion cameraRotation = mainCam.transform.rotation;
+            HandleMovement();
+        }
 
-            Vector3 targetDirection = cameraRotation * direction;
-            targetDirection.y = 0;
+        private void HandleMovement()
+        {
+            Vector3 direction = input.GetInput.normalized;
+            accMultiplier = (input.IsInput) ? acceleration : decelaration;
 
-            controller.Move(targetDirection.normalized * playerMoveSpeed * Time.fixedDeltaTime);
-            transform.rotation = Quaternion.Euler(0, cameraRotation.eulerAngles.y, 0);
+            desiredSpeed = direction.magnitude * playerMoveSpeed;
+            currentSpeed = Mathf.MoveTowards(currentSpeed, desiredSpeed, Time.fixedDeltaTime * accMultiplier);
+            
+            anim.SetFloat(speedFloat, currentSpeed);
         }
     }
 }
