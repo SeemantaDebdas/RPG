@@ -3442,6 +3442,7 @@ GameObject:
   - component: {fileID: 6370789703193344257}
   - component: {fileID: 4993302124882812029}
   - component: {fileID: 8170102240718167347}
+  - component: {fileID: 3065400272345975888}
   - component: {fileID: 7477294248702543886}
   m_Layer: 0
   m_Name: Player
@@ -3544,8 +3545,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8237b71bf2d0c8c44a677fc2293adf58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMoveSpeed: 10
-  playerRotationSpeed: 0
+  playerMoveSpeed: 5
+  playerRotationSpeed: 400
 --- !u!114 &8170102240718167347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3558,6 +3559,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3707761c4589ebe419913735e9ac7809, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3065400272345975888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6482238795653368403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9de031c289b2f8469d1529331c4b854, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cineCam: {fileID: 0}
 --- !u!143 &7477294248702543886
 CharacterController:
   m_ObjectHideFlags: 0
