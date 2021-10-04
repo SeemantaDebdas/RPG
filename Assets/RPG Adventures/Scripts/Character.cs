@@ -9,7 +9,6 @@ namespace RPG {
         [SerializeField] float playerMoveSpeed;
         [SerializeField] float playerRotationSpeed;
         [SerializeField] Transform playerCamera;
-        Quaternion rotation;
 
         Rigidbody rb;
 
@@ -38,16 +37,10 @@ namespace RPG {
 
         private void HandleRotation()
         {
-            Quaternion cameraForward = Quaternion.Euler(playerCamera.forward);
             Vector3 direction = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")).normalized;
-
-            Vector3 desiredForward = Vector3.RotateTowards(transform.forward, direction, playerRotationSpeed * Time.fixedDeltaTime, 0);
-            rotation = Quaternion.LookRotation(desiredForward);
-
-            direction = cameraForward * direction;
+            
 
             rb.MovePosition(rb.position + direction * playerMoveSpeed * Time.fixedDeltaTime);
-            rb.MoveRotation(rotation);
         }
 
         private void MyMethodOfRotation()
