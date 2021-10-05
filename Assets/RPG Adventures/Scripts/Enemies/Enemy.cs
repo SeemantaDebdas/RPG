@@ -19,7 +19,6 @@ namespace RPG {
         float timeSinceLostTarget;
 
         //animator
-        bool returnBool;
         readonly int StopBool = Animator.StringToHash("StopBool");
         readonly int ReturnBool = Animator.StringToHash("ReturnBool");
 
@@ -49,7 +48,7 @@ namespace RPG {
             else
             {
                 navMeshAgent.SetDestination(player.transform.position);
-                returnBool = false;
+                anim.SetBool(ReturnBool, false);
                 if (target == null)
                 {
                     //if player goes out of range and we want
@@ -75,9 +74,7 @@ namespace RPG {
         {
             Vector3 distanceToOrigin = originPosition - transform.position;
             distanceToOrigin.y = 0;
-            Debug.Log(distanceToOrigin.magnitude);
             anim.SetBool(StopBool, navMeshAgent.isStopped || distanceToOrigin.magnitude < 0.1f);
-            anim.SetBool(ReturnBool, returnBool);
         }
 
         IEnumerator WaitOnPursuit()
@@ -85,7 +82,7 @@ namespace RPG {
             yield return new WaitForSeconds(pursuitResetTimer);
             navMeshAgent.isStopped = false;
             navMeshAgent.SetDestination(originPosition);
-            returnBool = true;
+            anim.SetBool(ReturnBool, true);
         }
 
         Character DetectPlayer()
