@@ -4,6 +4,16 @@ using Cinemachine;
 namespace RPG { 
     public class Character : MonoBehaviour
     {
+        public static Character Instance
+        {
+            get
+            {
+                return instance;
+            }
+        }
+
+        static Character instance;
+
         [SerializeField] float playerMoveSpeed;
         [SerializeField] float playerRotationSpeed;
         [SerializeField] float gravity = 10f;
@@ -26,6 +36,8 @@ namespace RPG {
 
         private void Awake()
         {
+            instance = this;
+
             controller = GetComponent<CharacterController>();
             input = GetComponent<CharacterInput>();
             anim = GetComponent<Animator>();

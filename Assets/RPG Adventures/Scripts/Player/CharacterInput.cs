@@ -37,7 +37,6 @@ namespace RPG {
                       );
 
             canSprint = Input.GetKey(KeyCode.LeftShift);
-            Debug.Log(canSprint);
         }
     }
 }
