@@ -12,8 +12,8 @@ namespace RPG {
         [SerializeField] float pursuitResetTimer = 2f;
 
         Character player;
-        NavMeshAgent navMeshAgent;
         Animator anim;
+        EnemyController enemyController;
 
         Vector3 originPosition;
         float timeSinceLostTarget;
@@ -26,7 +26,7 @@ namespace RPG {
         void Awake()
         {
             anim = GetComponent<Animator>();
-            navMeshAgent = GetComponent<NavMeshAgent>();
+            enemyController = GetComponent<EnemyController>();
             originPosition = transform.position;
         }
 
@@ -47,7 +47,7 @@ namespace RPG {
             }
             else
             {
-                navMeshAgent.SetDestination(player.transform.position);
+                enemyController.SetDestination(player.transform.position);
                 anim.SetBool(ReturnBool, false);
                 if (target == null)
                 {
@@ -58,7 +58,7 @@ namespace RPG {
                     if (timeSinceLostTarget >= timeToStopPursuit)
                     {
                         player = null;
-                        navMeshAgent.isStopped = true;
+                        enemyController.NavMeshIsStopped = true;
                         StartCoroutine(WaitOnPursuit());
                     }
 
@@ -74,14 +74,14 @@ namespace RPG {
         {
             Vector3 distanceToOrigin = originPosition - transform.position;
             distanceToOrigin.y = 0;
-            anim.SetBool(StopBool, navMeshAgent.isStopped || distanceToOrigin.magnitude < 0.1f);
+            anim.SetBool(StopBool, enemyController.NavMeshIsStopped || distanceToOrigin.magnitude < 0.1f);
         }
 
         IEnumerator WaitOnPursuit()
         {
             yield return new WaitForSeconds(pursuitResetTimer);
-            navMeshAgent.isStopped = false;
-            navMeshAgent.SetDestination(originPosition);
+            enemyController.NavMeshIsStopped = false;
+            enemyController.SetDestination(originPosition);
             anim.SetBool(ReturnBool, true);
         }
 
