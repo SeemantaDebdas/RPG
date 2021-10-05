@@ -4179,7 +4179,7 @@ Animator:
   m_GameObject: {fileID: 8005116106094349448}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 7e30eee73c241d5448ce0ac372cf6602, type: 3}
-  m_Controller: {fileID: 9100000, guid: d7c55390ab0320c47b84f63184ecb1b9, type: 2}
+  m_Controller: {fileID: 9100000, guid: 4b53bfba17eef72459f0ce8c9c1e8440, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -4242,6 +4242,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cf84a94d3cefc240ae88598dab659b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detectionRange: 10
+  detectionAngle: 90
+  timeToStopPursuit: 2
+  pursuitResetTimer: 2
 --- !u!1 &8005118020334088468
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,23 +8,84 @@ namespace RPG {
     {
         [SerializeField] float detectionRange = 10f;
         [SerializeField] float detectionAngle = 90f;
+        [SerializeField] float timeToStopPursuit = 2f;
+        [SerializeField] float pursuitResetTimer = 2f;
 
         Character player;
         NavMeshAgent navMeshAgent;
+        Animator anim;
+
+        Vector3 originPosition;
+        float timeSinceLostTarget;
+
+        //animator
+        bool returnBool;
+        readonly int StopBool = Animator.StringToHash("StopBool");
+        readonly int ReturnBool = Animator.StringToHash("ReturnBool");
+
         // Start is called before the first frame update
         void Awake()
         {
+            anim = GetComponent<Animator>();
             navMeshAgent = GetComponent<NavMeshAgent>();
+            originPosition = transform.position;
         }
 
         // Update is called once per frame
         void Update()
         {
-            player = DetectPlayer();
-            if (player == null) return;
+            Character target = DetectPlayer();
+            HandleAnimaton();
 
-            Vector3 targetPos = player.transform.position;
-            navMeshAgent.SetDestination(targetPos);
+            if (player == null)
+            {
+                if (target != null)
+                {
+                    //if player is null but target detected
+                    //basically when player enters enemy detection range
+                    player = target;
+                }
+            }
+            else
+            {
+                navMeshAgent.SetDestination(player.transform.position);
+                returnBool = false;
+                if (target == null)
+                {
+                    //if player goes out of range and we want
+                    //to stop our enemy from chasing
+                    timeSinceLostTarget += Time.deltaTime;
+
+                    if (timeSinceLostTarget >= timeToStopPursuit)
+                    {
+                        player = null;
+                        navMeshAgent.isStopped = true;
+                        StartCoroutine(WaitOnPursuit());
+                    }
+
+                }
+                else
+                {
+                    timeSinceLostTarget = 0;
+                }
+            }
+        }
+
+        void HandleAnimaton()
+        {
+            Vector3 distanceToOrigin = originPosition - transform.position;
+            distanceToOrigin.y = 0;
+            Debug.Log(distanceToOrigin.magnitude);
+            anim.SetBool(StopBool, navMeshAgent.isStopped || distanceToOrigin.magnitude < 0.1f);
+            anim.SetBool(ReturnBool, returnBool);
+        }
+
+        IEnumerator WaitOnPursuit()
+        {
+            yield return new WaitForSeconds(pursuitResetTimer);
+            navMeshAgent.isStopped = false;
+            navMeshAgent.SetDestination(originPosition);
+            returnBool = true;
         }
 
         Character DetectPlayer()
