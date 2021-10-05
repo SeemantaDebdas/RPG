@@ -1,6 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+
 
 namespace RPG {
     public class Enemy : MonoBehaviour
@@ -8,25 +8,29 @@ namespace RPG {
         [SerializeField] float detectionRange = 10f;
         [SerializeField] float detectionAngle = 90f;
 
-        Transform playerTransform;
-
+        Character player;
+        NavMeshAgent navMeshAgent;
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
-            
+            navMeshAgent = GetComponent<NavMeshAgent>();
         }
 
         // Update is called once per frame
         void Update()
         {
-            DetectPlayer();
+            player = DetectPlayer();
+            if (player == null) return;
+
+            Vector3 targetPos = player.transform.position;
+            navMeshAgent.SetDestination(targetPos);
         }
 
-        void DetectPlayer()
+        Character DetectPlayer()
         {
-            if (!Character.Instance) return;
-            playerTransform = Character.Instance.transform;
-            Vector3 distanceToPlayer = playerTransform.position - transform.position;
+            if (Character.Instance == null) return null;
+
+            Vector3 distanceToPlayer = Character.Instance.transform.position - transform.position;
             distanceToPlayer.y = 0f;
 
             if (distanceToPlayer.magnitude <= detectionRange)
@@ -34,13 +38,11 @@ namespace RPG {
                 if(Vector3.Dot(distanceToPlayer.normalized,transform.forward)>
                     Mathf.Cos(detectionAngle * 0.5f * Mathf.Deg2Rad))
                 {
-                    Debug.Log("Player Detected");
+                    return Character.Instance;
                 }
             }
-            else
-            {
-                Debug.Log("Player Lost");
-            }
+
+            return null;
         }
 
 #if UNITY_EDITOR
