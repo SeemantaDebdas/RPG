@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7397815123421262602}
   - component: {fileID: 7397815123422228938}
   - component: {fileID: -3106862420605157698}
+  - component: {fileID: 5941107152750134911}
   m_Layer: 0
   m_Name: Sword_4
   m_TagString: Untagged
@@ -26,13 +27,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7397815123424489226}
-  m_LocalRotation: {x: -0.67541456, y: 0.12551582, z: -0.015406723, w: 0.72651476}
+  m_LocalRotation: {x: -0.6754151, y: 0.1255169, z: -0.015404312, w: 0.7265141}
   m_LocalPosition: {x: -1.3989692, y: 0.000000044703484, z: -0.34123635}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -77.831, y: 74.56, z: -65.578}
 --- !u!33 &7397815123421262602
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -96,3 +97,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   handTransform: {fileID: 0}
+--- !u!114 &5941107152750134911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7397815123424489226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce7c49100a811674ab4b8f6311f69f3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackPoints:
+  - rootPosition: {fileID: 7397815123424654122}
+    radius: 0.15
+    offset: {x: -0.23, y: 0.1, z: 0.93}
+  - rootPosition: {fileID: 7397815123424654122}
+    radius: 0.15
+    offset: {x: -0.19, y: 0.08, z: 0.66}
+  weaponDamage: 0
