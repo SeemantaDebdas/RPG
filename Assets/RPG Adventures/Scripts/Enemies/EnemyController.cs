@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
+
+
     NavMeshAgent navMeshAgent;
     Animator anim;
 
