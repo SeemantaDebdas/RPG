@@ -14,12 +14,17 @@ public class EnemyController : MonoBehaviour
     {
         get
         {
-            return navMeshAgent.isStopped;
+            return (navMeshAgent.enabled) ? navMeshAgent.isStopped : true;
         }
         set
         {
             navMeshAgent.isStopped = value;
         }
+    }
+
+    public bool NavMeshActive
+    {
+        get { return navMeshAgent.enabled; }
     }
 
     private void Awake()
@@ -31,13 +36,18 @@ public class EnemyController : MonoBehaviour
     private void OnAnimatorMove()
     {
         if (navMeshAgent == null) return;
-        if(!anim.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        if(!anim.GetCurrentAnimatorStateInfo(0).IsName("Idle") && navMeshAgent.enabled)
             navMeshAgent.speed = (anim.deltaPosition / Time.fixedDeltaTime).magnitude;
-        Debug.Log((anim.deltaPosition/Time.fixedDeltaTime).magnitude);
     }
 
     public void SetDestination(Vector3 position)
     {
+        if (!navMeshAgent.enabled) navMeshAgent.enabled = true;
         navMeshAgent.SetDestination(position);
+    }
+
+    public void StopFollowTarget()
+    {
+        navMeshAgent.enabled = false;
     }
 }

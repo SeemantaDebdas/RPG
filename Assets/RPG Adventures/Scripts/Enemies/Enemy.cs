@@ -9,6 +9,7 @@ namespace RPG {
 
         [SerializeField] float timeToStopPursuit = 2f;
         [SerializeField] float pursuitResetTimer = 2f;
+        [SerializeField] float attackingDistance = 1.1f;
 
         public PlayerScanner playerScanner;
         Character player;
@@ -21,6 +22,7 @@ namespace RPG {
         //animator
         readonly int StopBool = Animator.StringToHash("StopBool");
         readonly int ReturnBool = Animator.StringToHash("ReturnBool");
+        readonly int AttackTrigger = Animator.StringToHash("AttackTrigger");
 
         // Start is called before the first frame update
         void Awake()
@@ -47,8 +49,21 @@ namespace RPG {
             }
             else
             {
-                enemyController.SetDestination(player.transform.position);
-                anim.SetBool(ReturnBool, false);
+                //following player
+                Vector3 distanceToPlayer = player.transform.position - transform.position;
+                distanceToPlayer.y = 0;
+                if (distanceToPlayer.magnitude < attackingDistance)
+                {
+                    Debug.Log("Attacking");
+                    enemyController.StopFollowTarget();
+                    anim.SetTrigger(AttackTrigger);
+                }
+                else
+                {
+                    enemyController.SetDestination(player.transform.position);
+                    anim.SetBool(ReturnBool, false);
+                }
+                
                 if (target == null)
                 {
                     //if player goes out of range and we want

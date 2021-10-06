@@ -4246,6 +4246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeToStopPursuit: 2
   pursuitResetTimer: 2
+  attackingDistance: 1.1
   playerScanner:
     detectionRange: 14
     detectionAngle: 180
