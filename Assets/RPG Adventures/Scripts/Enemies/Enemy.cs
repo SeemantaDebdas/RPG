@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -17,7 +18,10 @@ namespace RPG {
         EnemyController enemyController;
 
         Vector3 originPosition;
+        Quaternion originalRotation;
         float timeSinceLostTarget;
+        Vector3 distanceToOrigin;
+        bool nearBase;
 
         //animator
         readonly int StopBool = Animator.StringToHash("StopBool");
@@ -30,6 +34,7 @@ namespace RPG {
             anim = GetComponent<Animator>();
             enemyController = GetComponent<EnemyController>();
             originPosition = transform.position;
+            originalRotation = transform.rotation;
         }
 
         // Update is called once per frame
@@ -37,6 +42,11 @@ namespace RPG {
         {
             Character target = playerScanner.Detect(transform);
             HandleAnimaton();
+            ResetRotation();
+
+            distanceToOrigin = originPosition - transform.position;
+            distanceToOrigin.y = 0;
+            nearBase = distanceToOrigin.magnitude < 0.1f;
 
             if (player == null)
             {
@@ -54,7 +64,6 @@ namespace RPG {
                 distanceToPlayer.y = 0;
                 if (distanceToPlayer.magnitude < attackingDistance)
                 {
-                    Debug.Log("Attacking");
                     enemyController.StopFollowTarget();
                     anim.SetTrigger(AttackTrigger);
                 }
@@ -85,11 +94,21 @@ namespace RPG {
             }
         }
 
+        private void ResetRotation()
+        {
+            if (nearBase)
+            {
+                Quaternion targetRotation = Quaternion.RotateTowards(
+                                                                    transform.rotation,
+                                                                    originalRotation,
+                                                                    400 * Time.fixedDeltaTime);
+                transform.rotation = targetRotation;
+            }
+        }
+
         void HandleAnimaton()
         {
-            Vector3 distanceToOrigin = originPosition - transform.position;
-            distanceToOrigin.y = 0;
-            anim.SetBool(StopBool, enemyController.NavMeshIsStopped || distanceToOrigin.magnitude < 0.1f);
+            anim.SetBool(StopBool, enemyController.NavMeshIsStopped || nearBase);
         }
 
         IEnumerator WaitOnPursuit()
