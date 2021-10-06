@@ -14,7 +14,7 @@ public class EnemyController : MonoBehaviour
     {
         get
         {
-            return (navMeshAgent.enabled) ? navMeshAgent.isStopped : true;
+            return navMeshAgent.enabled ? navMeshAgent.isStopped : true;
         }
         set
         {

@@ -13,7 +13,7 @@ namespace RPG {
         [SerializeField] float attackingDistance = 1.1f;
 
         public PlayerScanner playerScanner;
-        Character player;
+        Character followTarget;
         Animator anim;
         EnemyController enemyController;
 
@@ -21,7 +21,6 @@ namespace RPG {
         Quaternion originalRotation;
         float timeSinceLostTarget;
         Vector3 distanceToOrigin;
-        bool nearBase;
 
         //animator
         readonly int StopBool = Animator.StringToHash("StopBool");
@@ -32,6 +31,9 @@ namespace RPG {
         void Awake()
         {
             anim = GetComponent<Animator>();
+
+            anim.SetBool(StopBool, true);
+
             enemyController = GetComponent<EnemyController>();
             originPosition = transform.position;
             originalRotation = transform.rotation;
@@ -40,63 +42,61 @@ namespace RPG {
         // Update is called once per frame
         void Update()
         {
-            Character target = playerScanner.Detect(transform);
             HandleAnimaton();
             ResetRotation();
+            IsNearBase();
 
+            Character detectedTarget = playerScanner.Detect(transform);
+            if (detectedTarget != null) followTarget = detectedTarget;
+
+            if (followTarget != null)
+            {
+                AttackOrFollow();
+                if (detectedTarget == null)
+                    StopPursuit();
+                else
+                    timeSinceLostTarget = 0;
+            }
+        }
+
+        private bool IsNearBase()
+        {
             distanceToOrigin = originPosition - transform.position;
             distanceToOrigin.y = 0;
-            nearBase = distanceToOrigin.magnitude < 0.1f;
+            return distanceToOrigin.magnitude < 0.1f;
+        }
 
-            if (player == null)
+        private void StopPursuit()
+        {
+            timeSinceLostTarget += Time.deltaTime;
+
+            if (timeSinceLostTarget >= timeToStopPursuit)
             {
-                if (target != null)
-                {
-                    //if player is null but target detected
-                    //basically when player enters enemy detection range
-                    player = target;
-                }
+                followTarget = null;
+                enemyController.NavMeshIsStopped = true;
+                StartCoroutine(WaitOnPursuit());
+            }
+        }
+
+        private void AttackOrFollow()
+        {
+            Vector3 distanceToPlayer = followTarget.transform.position - transform.position;
+            distanceToPlayer.y = 0;
+            if (distanceToPlayer.magnitude < attackingDistance)
+            {
+                enemyController.StopFollowTarget();
+                anim.SetTrigger(AttackTrigger);
             }
             else
             {
-                //following player
-                Vector3 distanceToPlayer = player.transform.position - transform.position;
-                distanceToPlayer.y = 0;
-                if (distanceToPlayer.magnitude < attackingDistance)
-                {
-                    enemyController.StopFollowTarget();
-                    anim.SetTrigger(AttackTrigger);
-                }
-                else
-                {
-                    enemyController.SetDestination(player.transform.position);
-                    anim.SetBool(ReturnBool, false);
-                }
-                
-                if (target == null)
-                {
-                    //if player goes out of range and we want
-                    //to stop our enemy from chasing
-                    timeSinceLostTarget += Time.deltaTime;
-
-                    if (timeSinceLostTarget >= timeToStopPursuit)
-                    {
-                        player = null;
-                        enemyController.NavMeshIsStopped = true;
-                        StartCoroutine(WaitOnPursuit());
-                    }
-
-                }
-                else
-                {
-                    timeSinceLostTarget = 0;
-                }
+                enemyController.SetDestination(followTarget.transform.position);
+                anim.SetBool(ReturnBool, false);
             }
         }
 
         private void ResetRotation()
         {
-            if (nearBase)
+            if (IsNearBase())
             {
                 Quaternion targetRotation = Quaternion.RotateTowards(
                                                                     transform.rotation,
@@ -108,7 +108,7 @@ namespace RPG {
 
         void HandleAnimaton()
         {
-            anim.SetBool(StopBool, enemyController.NavMeshIsStopped || nearBase);
+            anim.SetBool(StopBool, enemyController.NavMeshIsStopped || IsNearBase());
         }
 
         IEnumerator WaitOnPursuit()
