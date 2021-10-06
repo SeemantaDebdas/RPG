@@ -45,7 +45,11 @@ namespace RPG {
             HandleAnimaton();
             ResetRotation();
             IsNearBase();
+            HandleTarget();
+        }
 
+        private void HandleTarget()
+        {
             Character detectedTarget = playerScanner.Detect(transform);
             if (detectedTarget != null) followTarget = detectedTarget;
 
@@ -74,7 +78,7 @@ namespace RPG {
             {
                 followTarget = null;
                 enemyController.NavMeshIsStopped = true;
-                StartCoroutine(WaitOnPursuit());
+                StartCoroutine(WaitBeforeReturn());
             }
         }
 
@@ -84,14 +88,28 @@ namespace RPG {
             distanceToPlayer.y = 0;
             if (distanceToPlayer.magnitude < attackingDistance)
             {
-                enemyController.StopFollowTarget();
-                anim.SetTrigger(AttackTrigger);
+                AttackTarget(distanceToPlayer);
             }
             else
             {
-                enemyController.SetDestination(followTarget.transform.position);
-                anim.SetBool(ReturnBool, false);
+                FollowTarget();
             }
+        }
+
+        void AttackTarget(Vector3 distanceToPlayer)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(distanceToPlayer);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation,
+                                                          targetRotation,
+                                                          360 * Time.deltaTime);
+            enemyController.StopFollowTarget();
+            anim.SetTrigger(AttackTrigger);
+        }
+
+        void FollowTarget()
+        {
+            enemyController.SetDestination(followTarget.transform.position);
+            anim.SetBool(ReturnBool, false);
         }
 
         private void ResetRotation()
@@ -111,7 +129,7 @@ namespace RPG {
             anim.SetBool(StopBool, enemyController.NavMeshIsStopped || IsNearBase());
         }
 
-        IEnumerator WaitOnPursuit()
+        IEnumerator WaitBeforeReturn()
         {
             yield return new WaitForSeconds(pursuitResetTimer);
             enemyController.NavMeshIsStopped = false;
@@ -133,6 +151,10 @@ namespace RPG {
                                              Vector3.up,
                                              rotatedForward,
                                              playerScanner.detectionAngle, playerScanner.detectionRange);
+            UnityEditor.Handles.DrawSolidArc(transform.position,
+                                             Vector3.up,
+                                             rotatedForward,
+                                             360, playerScanner.meleeAttackRange);
         }
 #endif
     }

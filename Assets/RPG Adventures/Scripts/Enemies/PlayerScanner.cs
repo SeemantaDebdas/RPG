@@ -8,6 +8,7 @@ public class PlayerScanner
 {
     public float detectionRange = 10f;
     public float detectionAngle = 90f;
+    public float meleeAttackRange = 2.0f;
 
     public Character Detect(Transform detector)
     {
@@ -18,8 +19,9 @@ public class PlayerScanner
 
         if (distanceToPlayer.magnitude <= detectionRange)
         {
-            if (Vector3.Dot(distanceToPlayer.normalized, detector.forward) >
+            if ((Vector3.Dot(distanceToPlayer.normalized, detector.forward) >
                 Mathf.Cos(detectionAngle * 0.5f * Mathf.Deg2Rad))
+                ||distanceToPlayer.magnitude <= meleeAttackRange)
             {
                 return Character.Instance;
             }

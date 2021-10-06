@@ -14,6 +14,8 @@ namespace RPG {
 
         static Character instance;
 
+        [SerializeField] Transform weaponHolder;
+
         [SerializeField] float playerMoveSpeed;
         [SerializeField] float playerRotationSpeed;
         [SerializeField] float gravity = 10f;

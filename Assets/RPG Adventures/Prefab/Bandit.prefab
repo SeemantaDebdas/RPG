@@ -4250,7 +4250,8 @@ MonoBehaviour:
   attackingDistance: 1.1
   playerScanner:
     detectionRange: 10
-    detectionAngle: 180
+    detectionAngle: 150
+    meleeAttackRange: 2
 --- !u!114 &2060859123
 MonoBehaviour:
   m_ObjectHideFlags: 0
