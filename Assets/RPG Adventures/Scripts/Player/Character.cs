@@ -33,6 +33,7 @@ namespace RPG {
         float accMultiplier;
 
         readonly int speedFloat = Animator.StringToHash("SpeedFloat");
+        readonly int attackTrigger = Animator.StringToHash("AttackTrigger");
 
         private void Awake()
         {
@@ -61,6 +62,7 @@ namespace RPG {
             HandleMovement();
             HandleRotation();
             HandleGravity();
+            HandleAttack();
         }
 
         private void OnAnimatorMove()
@@ -113,6 +115,13 @@ namespace RPG {
             currentSpeed = Mathf.MoveTowards(currentSpeed, desiredSpeed, Time.fixedDeltaTime * accMultiplier);
             
             anim.SetFloat(speedFloat, currentSpeed);
+        }
+
+        void HandleAttack()
+        {
+            anim.ResetTrigger(attackTrigger);
+            if (input.IsAttacking)
+                anim.SetTrigger(attackTrigger);
         }
     }
 }

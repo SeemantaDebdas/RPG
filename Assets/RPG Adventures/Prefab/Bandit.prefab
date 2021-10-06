@@ -4248,7 +4248,7 @@ MonoBehaviour:
   pursuitResetTimer: 2
   attackingDistance: 1.1
   playerScanner:
-    detectionRange: 14
+    detectionRange: 7
     detectionAngle: 180
 --- !u!114 &2060859123
 MonoBehaviour:
