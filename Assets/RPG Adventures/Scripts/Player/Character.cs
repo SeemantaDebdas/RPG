@@ -14,8 +14,7 @@ namespace RPG {
 
         static Character instance;
 
-        [SerializeField] Transform weaponHolder;
-
+        [SerializeField] Weapon weapon;
         [SerializeField] float playerMoveSpeed;
         [SerializeField] float playerRotationSpeed;
         [SerializeField] float gravity = 10f;
@@ -124,6 +123,7 @@ namespace RPG {
             anim.ResetTrigger(attackTrigger);
             if (input.IsAttacking)
                 anim.SetTrigger(attackTrigger);
+            weapon.BeginAttack();
         }
     }
 }

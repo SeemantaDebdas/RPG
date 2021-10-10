@@ -3493,7 +3493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8237b71bf2d0c8c44a677fc2293adf58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponHolder: {fileID: 0}
+  weapon: {fileID: 0}
   playerMoveSpeed: 5
   playerRotationSpeed: 1200
   gravity: 10
