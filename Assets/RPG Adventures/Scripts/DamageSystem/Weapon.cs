@@ -26,11 +26,12 @@ namespace RPG
                 for (int i = 0; i < attackPoints.Length; i++)
                 {
                     AttackPoints ap = attackPoints[i];
-                    Vector3 worldPos = attackPoints[i].rootPosition.position + ap.rootPosition.TransformVector(ap.offset);
+                    Vector3 worldPos = 
+                        ap.rootPosition.position + ap.rootPosition.TransformVector(ap.offset);
                     Vector3 attackVector = worldPos - originAttackPos[i];
 
                     Ray r = new Ray(worldPos, attackVector);
-                    Debug.DrawRay(worldPos, attackVector, Color.red, 4f);
+                    Debug.DrawRay(worldPos, attackVector, Color.red, 4.0f);
                 }
             }
         }
@@ -43,8 +44,8 @@ namespace RPG
             for (int i = 0; i < attackPoints.Length; i++)
             {
                 AttackPoints ap = attackPoints[i];
-                originAttackPos[i] = attackPoints[i].rootPosition.position + ap.rootPosition.TransformVector(ap.offset);
-
+                originAttackPos[i] = 
+                    ap.rootPosition.position + ap.rootPosition.TransformVector(ap.offset);
             }
 
         }
