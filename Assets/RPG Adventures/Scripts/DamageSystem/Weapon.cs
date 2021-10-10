@@ -31,7 +31,7 @@ namespace RPG
                     Vector3 attackVector = worldPos - originAttackPos[i];
 
                     Ray r = new Ray(worldPos, attackVector);
-                    Debug.DrawRay(worldPos, attackVector, Color.red, 4.0f);
+                    Debug.DrawRay(worldPos, attackVector, Color.red, 1.0f);
                 }
             }
         }
@@ -45,7 +45,7 @@ namespace RPG
             {
                 AttackPoints ap = attackPoints[i];
                 originAttackPos[i] = 
-                    ap.rootPosition.position + ap.rootPosition.TransformVector(ap.offset);
+                    ap.rootPosition.position + ap.rootPosition.TransformDirection(ap.offset);
             }
 
         }

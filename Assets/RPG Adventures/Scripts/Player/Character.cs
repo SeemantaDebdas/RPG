@@ -122,8 +122,11 @@ namespace RPG {
         {
             anim.ResetTrigger(attackTrigger);
             if (input.IsAttacking)
+            {
                 anim.SetTrigger(attackTrigger);
-            weapon.BeginAttack();
+                weapon.BeginAttack();
+            }
+            
         }
     }
 }
