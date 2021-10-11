@@ -9,7 +9,7 @@ namespace RPG
         [System.Serializable]
         public class AttackPoints
         {
-            public Transform rootPosition;
+            public Transform rootTransform;
             public float radius;
             public Vector3 offset;
         }
@@ -27,9 +27,11 @@ namespace RPG
                 {
                     AttackPoints ap = attackPoints[i];
                     Vector3 worldPos = 
-                        ap.rootPosition.position + ap.rootPosition.TransformVector(ap.offset);
+                        ap.rootTransform.position + ap.rootTransform.TransformVector(ap.offset);
                     Vector3 attackVector = worldPos - originAttackPos[i];
 
+                    Debug.Log("WorldPosition: " + worldPos);
+                    Debug.Log("Origin Attack Position: " + originAttackPos[i]);
                     Ray r = new Ray(worldPos, attackVector);
                     Debug.DrawRay(worldPos, attackVector, Color.red, 1.0f);
                 }
@@ -45,7 +47,7 @@ namespace RPG
             {
                 AttackPoints ap = attackPoints[i];
                 originAttackPos[i] = 
-                    ap.rootPosition.position + ap.rootPosition.TransformDirection(ap.offset);
+                    ap.rootTransform.position + ap.rootTransform.TransformVector(ap.offset);
             }
 
         }
@@ -55,11 +57,11 @@ namespace RPG
         {
             foreach (AttackPoints attackPoint in attackPoints)
             {
-                if (attackPoint.rootPosition != null)
+                if (attackPoint.rootTransform != null)
                 {
-                    Vector3 localOffset = attackPoint.rootPosition.TransformVector(attackPoint.offset);
+                    Vector3 worldOffset = attackPoint.rootTransform.TransformVector(attackPoint.offset);
                     Gizmos.color = new Color(1.0f, 1.0f, 1.0f, 0.5f);
-                    Gizmos.DrawSphere(attackPoint.rootPosition.position + localOffset, attackPoint.radius);
+                    Gizmos.DrawSphere(attackPoint.rootTransform.position + worldOffset, attackPoint.radius);
                 }
             }
         }
