@@ -7,7 +7,7 @@ namespace RPG {
     {
         [SerializeField] Transform handTransform;
         // Start is called before the first frame update
-        void LateUpdate()
+        private void LateUpdate()
         {
             transform.position = handTransform.position;
             transform.rotation = handTransform.rotation;

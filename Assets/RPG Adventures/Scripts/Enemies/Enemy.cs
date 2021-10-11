@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 
 namespace RPG {
-    public class Enemy : MonoBehaviour
+    public class Enemy : MonoBehaviour,IAttackAnimListener
     {
 
         [SerializeField] float timeToStopPursuit = 2f;
@@ -144,7 +144,9 @@ namespace RPG {
             anim.SetBool(StopBool, false);
         }
 
-        
+        public void MeleeAttackStart(){}
+
+        public void MeleeAttackStop(){}
 
 #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
@@ -163,6 +165,8 @@ namespace RPG {
                                              rotatedForward,
                                              360, playerScanner.meleeAttackRange);
         }
+
+
 #endif
     }
 }

@@ -111,4 +111,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackPoints: []
   isAttacking: 0
-  weaponDamage: 0
+  weaponDamage: 20

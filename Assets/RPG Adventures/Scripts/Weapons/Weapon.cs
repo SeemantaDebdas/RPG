@@ -29,9 +29,6 @@ namespace RPG
                     Vector3 worldPos = 
                         ap.rootTransform.position + ap.rootTransform.TransformVector(ap.offset);
                     Vector3 attackVector = worldPos - originAttackPos[i];
-
-                    Debug.Log("WorldPosition: " + worldPos);
-                    Debug.Log("Origin Attack Position: " + originAttackPos[i]);
                     Ray r = new Ray(worldPos, attackVector);
                     Debug.DrawRay(worldPos, attackVector, Color.red, 1.0f);
                 }
@@ -47,9 +44,14 @@ namespace RPG
             {
                 AttackPoints ap = attackPoints[i];
                 originAttackPos[i] = 
-                    ap.rootTransform.position + ap.rootTransform.TransformVector(ap.offset);
+                    ap.rootTransform.position + ap.rootTransform.TransformDirection(ap.offset);
             }
 
+        }
+
+        public void StopAttack()
+        {
+            isAttacking = false;
         }
 
 #if UNITY_EDITOR

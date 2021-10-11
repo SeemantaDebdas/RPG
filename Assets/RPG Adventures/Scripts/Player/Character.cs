@@ -2,7 +2,7 @@ using UnityEngine;
 using Cinemachine;
 
 namespace RPG { 
-    public class Character : MonoBehaviour
+    public class Character : MonoBehaviour,IAttackAnimListener
     {
         public static Character Instance
         {
@@ -124,9 +124,19 @@ namespace RPG {
             if (input.IsAttacking)
             {
                 anim.SetTrigger(attackTrigger);
-                weapon.BeginAttack();
             }
-            
+        }
+
+        public void MeleeAttackStart()
+        {
+            weapon.BeginAttack();
+            Debug.Log("Attack Start");
+        }
+
+        public void MeleeAttackStop()
+        {
+            weapon.StopAttack();
+            Debug.Log("Attack Stop");
         }
     }
 }
