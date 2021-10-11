@@ -42,13 +42,22 @@ namespace RPG {
         // Update is called once per frame
         void Update()
         {
-            HandleAnimaton();
-            ResetRotation();
-            IsNearBase();
-            HandleTarget();
+
+            var target = HandleTarget(); 
+            var isNearBase = IsNearBase();
+
+            if (isNearBase)
+            {
+                ResetRotation();
+            }
+            
+            if(target == null && isNearBase)
+            {
+                anim.SetBool(StopBool, true);
+            }
         }
 
-        private void HandleTarget()
+        private Character HandleTarget()
         {
             Character detectedTarget = playerScanner.Detect(transform);
             if (detectedTarget != null) followTarget = detectedTarget;
@@ -61,6 +70,8 @@ namespace RPG {
                 else
                     timeSinceLostTarget = 0;
             }
+
+            return followTarget;
         }
 
         private bool IsNearBase()
@@ -77,7 +88,7 @@ namespace RPG {
             if (timeSinceLostTarget >= timeToStopPursuit)
             {
                 followTarget = null;
-                enemyController.NavMeshIsStopped = true;
+                anim.SetBool(StopBool, true);
                 StartCoroutine(WaitBeforeReturn());
             }
         }
@@ -92,6 +103,7 @@ namespace RPG {
             }
             else
             {
+                anim.SetBool(StopBool, false);
                 FollowTarget();
             }
         }
@@ -124,17 +136,12 @@ namespace RPG {
             }
         }
 
-        void HandleAnimaton()
-        {
-            anim.SetBool(StopBool, enemyController.NavMeshIsStopped || IsNearBase());
-        }
-
         IEnumerator WaitBeforeReturn()
         {
             yield return new WaitForSeconds(pursuitResetTimer);
-            enemyController.NavMeshIsStopped = false;
             enemyController.SetDestination(originPosition);
             anim.SetBool(ReturnBool, true);
+            anim.SetBool(StopBool, false);
         }
 
         
