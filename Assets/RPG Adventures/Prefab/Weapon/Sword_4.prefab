@@ -111,10 +111,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackPoints:
   - rootTransform: {fileID: 7397815123424654122}
-    radius: 0.16
-    offset: {x: -0.23, y: 0.07, z: 0.87}
+    radius: 0.1
+    offset: {x: -0.18, y: 0.07, z: 0.63}
   - rootTransform: {fileID: 7397815123424654122}
-    radius: 0.16
-    offset: {x: -0.18, y: 0.05, z: 0.58}
+    radius: 0.1
+    offset: {x: -0.15, y: 0.06, z: 0.45}
+  - rootTransform: {fileID: 7397815123424654122}
+    radius: 0.1
+    offset: {x: -0.12, y: 0.03, z: 0.26}
+  targetLayers:
+    serializedVersion: 2
+    m_Bits: 64
   isAttacking: 0
   weaponDamage: 30
