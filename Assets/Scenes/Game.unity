@@ -1080,19 +1080,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1625731110282086376, guid: 28cde31032f47d94fbb1c7cb3394f0fb, type: 3}
       propertyPath: m_FollowOffset.y
-      value: 2.26223
+      value: 2.531101
       objectReference: {fileID: 0}
     - target: {fileID: 1625731110282086376, guid: 28cde31032f47d94fbb1c7cb3394f0fb, type: 3}
       propertyPath: m_FollowOffset.z
-      value: -4.952533
+      value: -4.7983
       objectReference: {fileID: 0}
     - target: {fileID: 1625731110596065810, guid: 28cde31032f47d94fbb1c7cb3394f0fb, type: 3}
       propertyPath: m_FollowOffset.y
-      value: 2.26223
+      value: 2.531101
       objectReference: {fileID: 0}
     - target: {fileID: 1625731110596065810, guid: 28cde31032f47d94fbb1c7cb3394f0fb, type: 3}
       propertyPath: m_FollowOffset.z
-      value: -4.952533
+      value: -4.7983
       objectReference: {fileID: 0}
     - target: {fileID: 1625731110772316885, guid: 28cde31032f47d94fbb1c7cb3394f0fb, type: 3}
       propertyPath: m_Lens.m_SensorSize.x
@@ -1136,7 +1136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1625731110979583642, guid: 28cde31032f47d94fbb1c7cb3394f0fb, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -1e-45
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 1625731110979583642, guid: 28cde31032f47d94fbb1c7cb3394f0fb, type: 3}
       propertyPath: m_LocalRotation.z
@@ -1144,11 +1144,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1625731111073239365, guid: 28cde31032f47d94fbb1c7cb3394f0fb, type: 3}
       propertyPath: m_FollowOffset.y
-      value: 2.26223
+      value: 2.531101
       objectReference: {fileID: 0}
     - target: {fileID: 1625731111073239365, guid: 28cde31032f47d94fbb1c7cb3394f0fb, type: 3}
       propertyPath: m_FollowOffset.z
-      value: -4.952533
+      value: -4.7983
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 28cde31032f47d94fbb1c7cb3394f0fb, type: 3}

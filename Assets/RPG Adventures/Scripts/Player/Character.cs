@@ -44,6 +44,8 @@ namespace RPG {
             input = GetComponent<CharacterInput>();
             anim = GetComponent<Animator>();
             cinemachineCam = Camera.main.GetComponent<CinemachineCam>();
+
+            weapon.SetOwner(this.gameObject);
         }
 
         // Start is called before the first frame update

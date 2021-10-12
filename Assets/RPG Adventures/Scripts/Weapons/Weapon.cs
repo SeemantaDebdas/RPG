@@ -21,6 +21,7 @@ namespace RPG
         public LayerMask targetLayers;
         public bool isAttacking = false;
         public int weaponDamage;
+        GameObject weaponOwner;
 
         private void FixedUpdate()
         {
@@ -58,16 +59,27 @@ namespace RPG
             }
         }
 
+        public void SetOwner(GameObject weaponOwner)
+        {
+            this.weaponOwner = weaponOwner;
+        }
+
         void CheckDamage(Collider other, AttackPoints ap)
         {
             if ((targetLayers.value & 1<<other.gameObject.layer) == 0) return;
 
-            Damagable damagable = other.GetComponent<Damagable>();
+            Damageable damagable = other.GetComponent<Damageable>();
             if (damagable != null)
             {
-                damagable.Damage();
+                Damageable.DamageMessage data;
+                data.amount = weaponDamage;
+                data.damager = this;
+                data.damageSource = weaponOwner.transform.position;
+                damagable.Damage(data);
             }
         }
+
+
 
         public void BeginAttack()
         {
