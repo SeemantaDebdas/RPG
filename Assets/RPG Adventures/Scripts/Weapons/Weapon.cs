@@ -16,6 +16,9 @@ namespace RPG
 
         public AttackPoints[] attackPoints = new AttackPoints[0];
         Vector3[] originAttackPos;
+        RaycastHit[] rayCastHitCache = new RaycastHit[32];
+
+        public LayerMask targetLayers;
         public bool isAttacking = false;
         public int weaponDamage;
 
@@ -28,10 +31,41 @@ namespace RPG
                     AttackPoints ap = attackPoints[i];
                     Vector3 worldPos = 
                         ap.rootTransform.position + ap.rootTransform.TransformVector(ap.offset);
-                    Vector3 attackVector = worldPos - originAttackPos[i];
-                    Ray r = new Ray(worldPos, attackVector);
+                    Vector3 attackVector = (worldPos - originAttackPos[i]).normalized;
+                    Ray ray = new Ray(worldPos, attackVector);
                     Debug.DrawRay(worldPos, attackVector, Color.red, 1.0f);
+
+                    //checking for the number of contacts the attack vector made
+                    int contactNumber = Physics.SphereCastNonAlloc(
+                                            ray,
+                                            ap.radius,
+                                            rayCastHitCache,
+                                            attackVector.magnitude,
+                                            ~0,
+                                            QueryTriggerInteraction.Ignore);
+
+                    for(int contact = 0; contact < contactNumber; contact++)
+                    {
+                        Collider collider = rayCastHitCache[contact].collider;
+                        if (collider != null)
+                        {
+                            CheckDamage(collider, ap);
+                        }
+                    }
+
+                    originAttackPos[0] = worldPos;
                 }
+            }
+        }
+
+        void CheckDamage(Collider other, AttackPoints ap)
+        {
+            if ((targetLayers.value & 1<<other.gameObject.layer) == 0) return;
+
+            Damagable damagable = other.GetComponent<Damagable>();
+            if (damagable != null)
+            {
+                damagable.Damage();
             }
         }
 

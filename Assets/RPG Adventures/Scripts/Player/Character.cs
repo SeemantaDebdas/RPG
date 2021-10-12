@@ -130,13 +130,11 @@ namespace RPG {
         public void MeleeAttackStart()
         {
             weapon.BeginAttack();
-            Debug.Log("Attack Start");
         }
 
         public void MeleeAttackStop()
         {
             weapon.StopAttack();
-            Debug.Log("Attack Stop");
         }
     }
 }
