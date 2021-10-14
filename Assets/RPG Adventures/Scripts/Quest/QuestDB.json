@@ -1,0 +1,29 @@
+[
+	{
+		"uID": "q-1",
+		"title": "Annoying Bandits",
+		"description": "Defeat two bandits located south of the camp",
+		"experience": 100,
+		"gold": 5,
+		"amount": 2,
+		"target": ["6f3e3058-62ce-43da-bd38-d5c822c95175"],
+		"talkTo": null,
+		"explore": null,
+		"questGiver": "62b16e8f-5689-4c30-b3d7-9bdf681e7ed9",
+		"type": 0
+	},
+	{
+		"uID": "q-2",
+		"title": "Stealing our money",
+		"description": "Defeat bandit leader located north of the camp",
+		"experience": 200,
+		"gold": 15,
+		"amount": 1,
+		"target": ["6f3e3058-62ce-43da-bd38-d5c822c95175"],
+		"talkTo": null,
+		"explore": null,
+		"questGiver": "62b16e8f-5689-4c30-b3d7-9bdf681e7ed9",
+		"type": 0
+	}
+
+]

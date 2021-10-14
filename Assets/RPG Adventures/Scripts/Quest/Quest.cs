@@ -25,6 +25,6 @@ public class Quest
     public string talkTo;
     public Vector3 explore;
 
-    public string questOwner;
+    public string questGiver;
     public QuestType type;
 }
