@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 
 namespace RPG {
-    public class Enemy : MonoBehaviour,IAttackAnimListener
+    public class Enemy : MonoBehaviour,IAttackAnimListener,IMessageReceiver
     {
 
         [SerializeField] float timeToStopPursuit = 2f;
@@ -14,7 +14,6 @@ namespace RPG {
 
         public PlayerScanner playerScanner;
         Character followTarget;
-        Animator anim;
         EnemyController enemyController;
 
         Vector3 originPosition;
@@ -26,17 +25,20 @@ namespace RPG {
         readonly int StopBool = Animator.StringToHash("StopBool");
         readonly int ReturnBool = Animator.StringToHash("ReturnBool");
         readonly int AttackTrigger = Animator.StringToHash("AttackTrigger");
+        readonly int HurtTrigger = Animator.StringToHash("HurtTrigger");
+        readonly int DeathTrigger = Animator.StringToHash("DeathTrigger");
 
         // Start is called before the first frame update
         void Awake()
         {
-            anim = GetComponent<Animator>();
-
-            anim.SetBool(StopBool, true);
-
             enemyController = GetComponent<EnemyController>();
             originPosition = transform.position;
             originalRotation = transform.rotation;
+        }
+
+        private void Start()
+        {
+            enemyController.anim.SetBool(StopBool, true);
         }
 
         // Update is called once per frame
@@ -53,7 +55,7 @@ namespace RPG {
             
             if(target == null && isNearBase)
             {
-                anim.SetBool(StopBool, true);
+                enemyController.anim.SetBool(StopBool, true);
             }
         }
 
@@ -88,7 +90,7 @@ namespace RPG {
             if (timeSinceLostTarget >= timeToStopPursuit)
             {
                 followTarget = null;
-                anim.SetBool(StopBool, true);
+                enemyController.anim.SetBool(StopBool, true);
                 StartCoroutine(WaitBeforeReturn());
             }
         }
@@ -103,7 +105,7 @@ namespace RPG {
             }
             else
             {
-                anim.SetBool(StopBool, false);
+                enemyController.anim.SetBool(StopBool, false);
                 FollowTarget();
             }
         }
@@ -115,13 +117,13 @@ namespace RPG {
                                                           targetRotation,
                                                           360 * Time.deltaTime);
             enemyController.StopFollowTarget();
-            anim.SetTrigger(AttackTrigger);
+            enemyController.anim.SetTrigger(AttackTrigger);
         }
 
         void FollowTarget()
         {
             enemyController.SetDestination(followTarget.transform.position);
-            anim.SetBool(ReturnBool, false);
+            enemyController.anim.SetBool(ReturnBool, false);
         }
 
         private void ResetRotation()
@@ -140,8 +142,31 @@ namespace RPG {
         {
             yield return new WaitForSeconds(pursuitResetTimer);
             enemyController.SetDestination(originPosition);
-            anim.SetBool(ReturnBool, true);
-            anim.SetBool(StopBool, false);
+            enemyController.anim.SetBool(ReturnBool, true);
+            enemyController.anim.SetBool(StopBool, false);
+        }
+
+        public void OnReceiveMessage(MessageType type)
+        {
+            switch (type)
+            {
+                case MessageType.Damaged:
+                    HandleDamage();
+                    break;
+                case MessageType.Dead:
+                    HandleDeath();
+                    break;
+            }
+        }
+
+        void HandleDamage()
+        {
+            enemyController.anim.SetTrigger(HurtTrigger);
+        }
+
+        void HandleDeath()
+        {
+            enemyController.anim.SetTrigger(DeathTrigger);
         }
 
         public void MeleeAttackStart(){}

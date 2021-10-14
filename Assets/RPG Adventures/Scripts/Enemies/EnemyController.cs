@@ -8,13 +8,13 @@ public class EnemyController : MonoBehaviour
 
 
     NavMeshAgent navMeshAgent;
-    Animator anim;
+    public Animator anim;
 
     public bool NavMeshIsStopped
     {
         get
         {
-            return navMeshAgent.enabled ? navMeshAgent.isStopped : true;
+            return !navMeshAgent.enabled || navMeshAgent.isStopped;
         }
         set
         {

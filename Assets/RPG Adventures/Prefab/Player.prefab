@@ -3512,6 +3512,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHitPoints: 0
   hitAngle: 0
+  onDamageMessageReceivers: []
+  isInvulnerable: 0
+  invulnerabilityTime: 0.5
 --- !u!1 &6482240788135377035
 GameObject:
   m_ObjectHideFlags: 0
