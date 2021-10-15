@@ -6,5 +6,6 @@ namespace RPG {
     public class QuestGiver : MonoBehaviour
     {
         public Quest quest;
+        public Dialogue dialogue;
     }
 }

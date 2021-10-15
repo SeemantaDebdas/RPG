@@ -5,6 +5,7 @@ using UnityEngine;
 namespace RPG {
     public class CharacterInput : MonoBehaviour
     {
+        static CharacterInput instance;
 
         [SerializeField] float attackRate = 0.3f;
         [SerializeField] float interactableDistance = 10f;
@@ -14,13 +15,21 @@ namespace RPG {
         bool isAttacking;
         bool isLeftMouseClick;
         bool isInteracting;
-        bool isTalking;
+        bool isTalking = false;
 
+        Collider hitTarget;
+
+        public static CharacterInput Instance{get { return instance; }}
         public Vector3 GetInput { get { return movementInput; } }
         public bool IsAttacking { get { return isAttacking; } }
         public bool IsInput { get { return !Mathf.Approximately(movementInput.magnitude, 0f); } }
         public bool CanSprint { get { return canSprint; } }
+        public Collider HitTarget { get { return hitTarget; } }
 
+        private void Awake()
+        {
+            instance = this;
+        }
 
         // Update is called once per frame
         void Update()
@@ -47,10 +56,17 @@ namespace RPG {
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             bool isHit = Physics.Raycast(ray, out RaycastHit hit, interactableDistance);
-            if (isHit && hit.collider.CompareTag("QuestGiver"))
+            if (isHit)
             {
-                isTalking = true;
+                StartCoroutine(HandleHitTarget(hit.collider));
             }
+        }
+
+        IEnumerator HandleHitTarget(Collider hitCollider)
+        {
+            hitTarget = hitCollider;
+            yield return new WaitForSeconds(0.5f);
+            hitTarget = null;
         }
 
         private void HandleLeftMouseClick()

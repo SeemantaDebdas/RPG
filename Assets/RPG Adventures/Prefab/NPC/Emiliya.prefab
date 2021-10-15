@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -1517762398526801932, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
+      propertyPath: dialogue.queries.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 281058530353116966, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
       propertyPath: m_RootOrder
       value: 0
