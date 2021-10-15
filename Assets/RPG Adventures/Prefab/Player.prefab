@@ -3480,6 +3480,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackRate: 0.3
+  interactableDistance: 10
 --- !u!143 &7477294248702543886
 CharacterController:
   m_ObjectHideFlags: 0

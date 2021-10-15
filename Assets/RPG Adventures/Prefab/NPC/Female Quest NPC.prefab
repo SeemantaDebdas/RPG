@@ -92,6 +92,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Female Quest NPC
       objectReference: {fileID: 0}
+    - target: {fileID: 8830583579464620314, guid: a0f17283072bee14f956cf5da5b29f6d, type: 3}
+      propertyPath: m_TagString
+      value: QuestGiver
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0f17283072bee14f956cf5da5b29f6d, type: 3}
 --- !u!1 &283000094906075040 stripped

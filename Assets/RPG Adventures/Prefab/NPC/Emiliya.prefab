@@ -13,7 +13,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 281058530353116966, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -3.779871
       objectReference: {fileID: 0}
     - target: {fileID: 281058530353116966, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
       propertyPath: m_LocalPosition.y
@@ -21,11 +21,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 281058530353116966, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 2.4774382
       objectReference: {fileID: 0}
     - target: {fileID: 281058530353116966, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.5046783
       objectReference: {fileID: 0}
     - target: {fileID: 281058530353116966, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
       propertyPath: m_LocalRotation.x
@@ -33,7 +33,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 281058530353116966, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.86330754
       objectReference: {fileID: 0}
     - target: {fileID: 281058530353116966, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
       propertyPath: m_LocalRotation.z
@@ -45,7 +45,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 281058530353116966, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 119.38
       objectReference: {fileID: 0}
     - target: {fileID: 281058530353116966, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -53,7 +53,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 283000094906075040, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
       propertyPath: m_Name
-      value: Female Quest NPC
+      value: Emiliya
       objectReference: {fileID: 0}
+    - target: {fileID: 5227051718479194061, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
+      propertyPath: talkCursor
+      value: 
+      objectReference: {fileID: 2800000, guid: c8e927090ec80f74599f34a1441516d2, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
