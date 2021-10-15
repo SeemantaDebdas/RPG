@@ -9,7 +9,7 @@
 		"target": ["6f3e3058-62ce-43da-bd38-d5c822c95175"],
 		"talkTo": null,
 		"explore": null,
-		"questGiver": "62b16e8f-5689-4c30-b3d7-9bdf681e7ed9",
+		"questGiver": "other-quest-giver",
 		"type": 0
 	},
 	{
@@ -22,7 +22,7 @@
 		"target": ["6f3e3058-62ce-43da-bd38-d5c822c95175"],
 		"talkTo": null,
 		"explore": null,
-		"questGiver": "62b16e8f-5689-4c30-b3d7-9bdf681e7ed9",
+		"questGiver": "eb6a3d3c-f336-4a7a-af93-8c5aba6371d2",
 		"type": 0
 	}
 

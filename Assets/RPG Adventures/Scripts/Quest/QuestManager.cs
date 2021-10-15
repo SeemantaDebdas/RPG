@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-namespace RpgAdventure
+namespace RPG
 {
     public class JsonHelper
     {
@@ -29,6 +29,7 @@ namespace RpgAdventure
         private void Awake()
         {
             LoadQuestsFromDB();
+            AssignQuests();
         }
 
         private void LoadQuestsFromDB()
@@ -40,6 +41,31 @@ namespace RpgAdventure
                 quests = new Quest[loadedQuests.Length];
                 quests = loadedQuests;
             }
+        }
+
+        private void AssignQuests()
+        {
+            QuestGiver[] questGivers = FindObjectsOfType<QuestGiver>();
+            if(questGivers !=null && questGivers.Length > 0)
+            {
+                foreach (QuestGiver questGiver in questGivers)
+                {
+                    AssignQuestsToQuestGivers(questGiver);
+                }
+            }
+         
+        }
+
+        private void AssignQuestsToQuestGivers(QuestGiver questGiver)
+        {
+            foreach(var quest in quests)
+            {
+                if (questGiver.GetComponent<UniqueID>().UID == quest.questGiver)
+                {
+                    questGiver.quest = quest;
+                }
+            }
+          
         }
     }
 }
