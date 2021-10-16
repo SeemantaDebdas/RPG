@@ -7,5 +7,6 @@ namespace RPG {
     {
         public Quest quest;
         public Dialogue dialogue;
+        public bool interacted;
     }
 }

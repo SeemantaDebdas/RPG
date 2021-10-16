@@ -20,6 +20,7 @@ namespace RPG {
         public string text;
         public DialogueAnswer answer;
         public bool isAsked;
+        public bool isAlwaysAsked;
     }
 
     [System.Serializable]
@@ -27,6 +28,8 @@ namespace RPG {
     {
         [TextArea(3, 15)]
         public string welcomeText;
+        [TextArea(3, 15)]
+        public string postInteractionText;
         public DialogueQuestion[] queries;
     }
 }

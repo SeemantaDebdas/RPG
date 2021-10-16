@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 namespace RPG {
     public class DialogueManager : MonoBehaviour
@@ -18,6 +19,9 @@ namespace RPG {
 
         [SerializeField] Button buttonPrefab;
         [SerializeField] GameObject dialogueOptionList;
+
+        [SerializeField] float readingTimer = 2f;
+        float readingTimerCounter;
 
         CharacterInput characterInput;
         Dialogue activeDialogue;
@@ -70,6 +74,7 @@ namespace RPG {
             foreach(var query in queries)
             {
                 var dialogueButton = CreateDialogueMenuButtons(query.text);
+                RegisterOptionClickerHandler(dialogueButton,query);
             }
         }
 
@@ -80,15 +85,56 @@ namespace RPG {
             return buttonInstance;
         }
 
+        void RegisterOptionClickerHandler(Button dialogueButton,DialogueQuestion query)
+        {
+            //adding event trigger like OnClick and adding it to the button
+            EventTrigger trigger = dialogueButton.gameObject.AddComponent<EventTrigger>();
+            //creating a pointer down event trigger. Mouse CLick
+            var pointerDown = new EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerDown
+            };
+
+            pointerDown.callback.AddListener((e) =>
+            {
+                NPC.interacted = true;
+                if (!query.isAlwaysAsked)
+                {
+                    query.isAsked = true;
+                }
+                ClearDialogueOptions();
+                DisplayAnswerText(query.answer.text);
+                if(NPC!=null)Invoke(nameof(StartDialogue), 2f);
+            });
+
+            trigger.triggers.Add(pointerDown);
+        }
+
         void StartDialogue()
         {
             activeDialogue = NPC.dialogue;
-            dialogueUI.SetActive(true);
+
             headerText.text = NPC.name;
-            answerText.text = activeDialogue.welcomeText;
-
-
+            DisplayAnswerText(NPC.interacted?activeDialogue.postInteractionText:activeDialogue.welcomeText);
+            ClearDialogueOptions();
             CreateDialogueMenu();
+            dialogueUI.SetActive(true);
         }
+
+        void DisplayAnswerText(string text)
+        {
+            answerText.text = text;
+        }
+
+        void ClearDialogueOptions() { 
+            
+            foreach(Transform child in dialogueOptionList.transform)
+            {
+                if(child!=null)
+                    Destroy(child.gameObject);
+            }
+        }
+        
+
     }
 }
