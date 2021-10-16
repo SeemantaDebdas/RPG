@@ -8,8 +8,36 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -1517762398526801932, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
+      propertyPath: dialogue.welcomeText
+      value: Hello there stranger.What brings you to our town?
+      objectReference: {fileID: 0}
+    - target: {fileID: -1517762398526801932, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
       propertyPath: dialogue.queries.Array.size
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -1517762398526801932, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
+      propertyPath: dialogue.queries.Array.data[0].text
+      value: I've heard there are some Bandits lurking around here
+      objectReference: {fileID: 0}
+    - target: {fileID: -1517762398526801932, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
+      propertyPath: dialogue.queries.Array.data[1].text
+      value: None of your business.
+      objectReference: {fileID: 0}
+    - target: {fileID: -1517762398526801932, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
+      propertyPath: dialogue.queries.Array.data[0].answer.text
+      value: You've come to the right place. Two bandits just headed south from here
+      objectReference: {fileID: 0}
+    - target: {fileID: -1517762398526801932, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
+      propertyPath: dialogue.queries.Array.data[1].answer.text
+      value: How rude! Get Lost!
+      objectReference: {fileID: 0}
+    - target: {fileID: -1517762398526801932, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
+      propertyPath: dialogue.queries.Array.data[0].answer.questID
+      value: q-2
+      objectReference: {fileID: 0}
+    - target: {fileID: -1517762398526801932, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
+      propertyPath: dialogue.queries.Array.data[1].answer.forceDialogueQuit
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 281058530353116966, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
       propertyPath: m_RootOrder

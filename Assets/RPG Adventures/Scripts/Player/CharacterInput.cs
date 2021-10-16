@@ -8,14 +8,12 @@ namespace RPG {
         static CharacterInput instance;
 
         [SerializeField] float attackRate = 0.3f;
-        [SerializeField] float interactableDistance = 10f;
 
         Vector3 movementInput;
         bool canSprint;
         bool isAttacking;
         bool isLeftMouseClick;
         bool isInteracting;
-        bool isTalking = false;
 
         Collider hitTarget;
 
@@ -55,7 +53,7 @@ namespace RPG {
         private void HandleInteraction()
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            bool isHit = Physics.Raycast(ray, out RaycastHit hit, interactableDistance);
+            bool isHit = Physics.Raycast(ray, out RaycastHit hit);
             if (isHit)
             {
                 StartCoroutine(HandleHitTarget(hit.collider));
