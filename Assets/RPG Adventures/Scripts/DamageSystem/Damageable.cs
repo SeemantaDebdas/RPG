@@ -14,12 +14,21 @@ namespace RPG
 
         [SerializeField] bool isInvulnerable;
         [SerializeField] float invulnerabilityTime = 0.5f;
+
+        [Header("Experience")]
+        public int experience;
+        [SerializeField] LayerMask effectedLayerMask;
         float timeSinceLastHit;
 
 
         private void Awake()
         {
             currentHitPoints = maxHitPoints;
+            if((effectedLayerMask & 1 << this.gameObject.layer) != 0) {
+                onDamageMessageReceivers.Add(FindObjectOfType<QuestManager>());
+                onDamageMessageReceivers.Add(FindObjectOfType<PlayerStats>());
+            }
+            
         }
 
         private void Update()

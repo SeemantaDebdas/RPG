@@ -25,11 +25,17 @@ namespace RPG
     public class QuestManager : MonoBehaviour,IMessageReceiver
     {
         public Quest[] quests;
+        PlayerStats playerStats;
 
         private void Awake()
         {
             LoadQuestsFromDB();
             AssignQuests();
+        }
+
+        private void Start()
+        {
+            playerStats = FindObjectOfType<PlayerStats>();
         }
 
         private void LoadQuestsFromDB()
@@ -91,7 +97,7 @@ namespace RPG
                             if (quest.amount <= 0)
                             {
                                 quest.questStatus = QuestStatus.COMPLETED;
-                                Debug.Log("MissionAccomplished: " + quest.uID);
+                                playerStats.GainExperience(quest.experience);
                             }
                         }
                     }
