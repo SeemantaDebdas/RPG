@@ -3466,6 +3466,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 0}
+  handTransform: {fileID: 6484627057677468473}
   playerMoveSpeed: 5
   playerRotationSpeed: 1200
   gravity: 10

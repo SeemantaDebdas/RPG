@@ -6,8 +6,9 @@ using UnityEngine.Events;
 namespace RPG {
     public class ItemSpawner : MonoBehaviour
     {
-        public UnityEvent<GameObject> onItemPickup;
-        [SerializeField] GameObject weaponPrefab;
+        public UnityEvent<ItemSpawner> onItemPickup;
+        public GameObject weaponPrefab;
+        public Sprite weaponImageSprite;
         [SerializeField] LayerMask targetLayerMask;
 
         // Start is called before the first frame update
@@ -23,7 +24,7 @@ namespace RPG {
         {
             if((targetLayerMask.value & 1<<other.gameObject.layer) != 0)
             {
-                onItemPickup.Invoke(weaponPrefab);
+                onItemPickup.Invoke(this);
                 Destroy(this.gameObject);
             }
         }

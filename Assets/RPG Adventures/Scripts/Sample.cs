@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class Sample : MonoBehaviour
 {
-    private void Awake()
-    {
-        Debug.Log("Called");
-    }
-
     public void Started()
     {
         Debug.Log("Clicked");

@@ -13,6 +13,11 @@ namespace RPG {
             transform.position = handTransform.position;
             transform.rotation = handTransform.rotation;
         }
+
+        public void SetFollowTransform(Transform followTransform)
+        {
+            handTransform = followTransform;
+        }
     }
 }
 

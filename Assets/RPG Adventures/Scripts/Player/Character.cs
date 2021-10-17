@@ -15,6 +15,9 @@ namespace RPG {
         static Character instance;
 
         [SerializeField] Weapon weapon;
+        [SerializeField] Transform handTransform;
+
+        [Header("General Parameters")]
         [SerializeField] float playerMoveSpeed;
         [SerializeField] float playerRotationSpeed;
         [SerializeField] float gravity = 10f;
@@ -44,8 +47,6 @@ namespace RPG {
             input = GetComponent<CharacterInput>();
             anim = GetComponent<Animator>();
             cinemachineCam = Camera.main.GetComponent<CinemachineCam>();
-
-            weapon.SetOwner(this.gameObject);
         }
 
         private void FixedUpdate()
@@ -125,6 +126,22 @@ namespace RPG {
         public void MeleeAttackStop()
         {
             weapon.StopAttack();
+        }
+
+        public void EquipWeapon(InventorySlot slot)
+        {
+            if (weapon != null)
+            {
+                if (slot.item.name == weapon.name) return;
+                else
+                {
+                    Destroy(weapon.gameObject);
+                }
+            }
+            weapon = Instantiate(slot.item, transform).GetComponent<Weapon>();
+            weapon.SetOwner(this.gameObject);
+            weapon.name = slot.item.name;
+            weapon.GetComponent<FixedUpdateFollow>().SetFollowTransform(handTransform);
         }
     }
 }
