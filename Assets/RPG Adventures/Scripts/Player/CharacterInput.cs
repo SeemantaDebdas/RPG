@@ -14,6 +14,7 @@ namespace RPG {
         bool isAttacking;
         bool isLeftMouseClick;
         bool isInteracting;
+        bool uIActive;
 
         Collider hitTarget;
 
@@ -23,6 +24,7 @@ namespace RPG {
         public bool IsInput { get { return !Mathf.Approximately(movementInput.magnitude, 0f); } }
         public bool CanSprint { get { return canSprint; } }
         public Collider HitTarget { get { return hitTarget; } }
+        public bool UIActive { get { return uIActive; }set { uIActive = value; } }
 
         private void Awake()
         {

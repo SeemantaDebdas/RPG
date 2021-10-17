@@ -11,6 +11,6 @@ namespace RPG
 
     public interface IMessageReceiver 
     {
-        void OnReceiveMessage(MessageType type);
+        void OnReceiveMessage(MessageType type, object damageable, object message);
     }
 }

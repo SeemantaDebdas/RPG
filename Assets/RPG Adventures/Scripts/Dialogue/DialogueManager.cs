@@ -17,15 +17,18 @@ namespace RPG {
         [SerializeField] TextMeshProUGUI headerText;
         [SerializeField] float interactableDistance = 5f;
 
-        [SerializeField] Button buttonPrefab;
+        [SerializeField] Button dialogueButtonPrefab;
+        [SerializeField] Button closeDialogueButton;
         [SerializeField] GameObject dialogueOptionList;
 
-        [SerializeField] float readingTimer = 2f;
+        [SerializeField] float readingTimer = 5f;
         float readingTimerCounter;
 
         CharacterInput characterInput;
         Dialogue activeDialogue;
         QuestGiver NPC;
+
+        bool forceQuitDialogue;
 
         private void Awake()
         {
@@ -57,15 +60,26 @@ namespace RPG {
             {
                 StopDialogue();
             }
+
+            if (readingTimerCounter > 0)
+            {
+                readingTimerCounter += Time.deltaTime;
+                if (readingTimerCounter >= readingTimer)
+                {
+                    readingTimerCounter = 0;
+                    if (forceQuitDialogue)
+                    {
+                        StopDialogue();
+                    }
+                    else
+                    {
+                        DisplayDialogue();
+                    }
+                }
+            }
         }
 
-        private void StopDialogue()
-        {
-            activeDialogue = null;
-            NPC = null;
-            dialogueUI.SetActive(false);
-
-        }
+        
         
         void CreateDialogueMenu()
         {
@@ -80,7 +94,7 @@ namespace RPG {
 
         Button CreateDialogueMenuButtons(string buttonText)
         {
-            Button buttonInstance =Instantiate(buttonPrefab, dialogueOptionList.transform);
+            Button buttonInstance =Instantiate(dialogueButtonPrefab, dialogueOptionList.transform);
             buttonInstance.GetComponentInChildren<TextMeshProUGUI>().text = buttonText;
             return buttonInstance;
         }
@@ -97,14 +111,22 @@ namespace RPG {
 
             pointerDown.callback.AddListener((e) =>
             {
-                NPC.interacted = true;
+                if (!string.IsNullOrEmpty(query.answer.questID))
+                {
+                    characterInput.GetComponent<QuestLog>().AddQuest(NPC.quest);
+                }
+                if (query.answer.forceDialogueQuit)
+                {
+                    forceQuitDialogue = true;
+                }
                 if (!query.isAlwaysAsked)
                 {
                     query.isAsked = true;
                 }
+
                 ClearDialogueOptions();
                 DisplayAnswerText(query.answer.text);
-                if(NPC!=null)Invoke(nameof(StartDialogue), 2f);
+                TriggerDialgueReadingTimerCounter();
             });
 
             trigger.triggers.Add(pointerDown);
@@ -113,12 +135,32 @@ namespace RPG {
         void StartDialogue()
         {
             activeDialogue = NPC.dialogue;
-
             headerText.text = NPC.name;
-            DisplayAnswerText(NPC.interacted?activeDialogue.postInteractionText:activeDialogue.welcomeText);
+            dialogueUI.SetActive(true);
+
+            DisplayDialogue();
+            NPC.interacted = true;
+        }
+
+        public void StopDialogue()
+        {
+            readingTimerCounter = 0;
+            forceQuitDialogue = false;
+            activeDialogue = null;
+            NPC = null;
+            dialogueUI.SetActive(false);
+        }
+
+        void TriggerDialgueReadingTimerCounter()
+        {
+            readingTimerCounter = 0.001f;
+        }
+
+        void DisplayDialogue()
+        {
+            DisplayAnswerText((NPC.interacted)?activeDialogue.postInteractionText:activeDialogue.welcomeText);
             ClearDialogueOptions();
             CreateDialogueMenu();
-            dialogueUI.SetActive(true);
         }
 
         void DisplayAnswerText(string text)
@@ -134,7 +176,5 @@ namespace RPG {
                     Destroy(child.gameObject);
             }
         }
-        
-
     }
 }

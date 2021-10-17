@@ -22,7 +22,7 @@ namespace RPG
     }
 
 
-    public class QuestManager : MonoBehaviour
+    public class QuestManager : MonoBehaviour,IMessageReceiver
     {
         public Quest[] quests;
 
@@ -66,6 +66,37 @@ namespace RPG
                 }
             }
           
+        }
+
+        public void OnReceiveMessage(MessageType type, object damageable, object message)
+        {
+            if (type == MessageType.Dead)
+            {
+                CheckEnemyDead((Damageable)damageable,(Damageable.DamageMessage)message);
+            }
+        }
+
+        private void CheckEnemyDead(Damageable damagable, Damageable.DamageMessage message)
+        {
+            var questLog = message.damageSource.GetComponent<QuestLog>();
+            if (questLog != null)
+            {
+                foreach(var quest in questLog.acceptedQuests)
+                {
+                    if(quest.questStatus == QuestStatus.ACCEPTED) {
+                        if (quest.type == QuestType.HUNT &&
+                            Array.Exists(quest.target,(targetUID) => damagable.GetComponent<UniqueID>().UID == targetUID))
+                        {
+                            quest.amount--;
+                            if (quest.amount <= 0)
+                            {
+                                quest.questStatus = QuestStatus.COMPLETED;
+                                Debug.Log("MissionAccomplished: " + quest.uID);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

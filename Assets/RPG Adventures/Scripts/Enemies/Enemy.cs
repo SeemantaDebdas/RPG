@@ -146,7 +146,7 @@ namespace RPG {
             enemyController.anim.SetBool(StopBool, false);
         }
 
-        public void OnReceiveMessage(MessageType type)
+        public void OnReceiveMessage(MessageType type, object damageable, object message)
         {
             switch (type)
             {

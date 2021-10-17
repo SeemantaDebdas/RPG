@@ -74,7 +74,7 @@ namespace RPG
                 Damageable.DamageMessage data;
                 data.amount = weaponDamage;
                 data.damager = this;
-                data.damageSource = weaponOwner.transform.position;
+                data.damageSource = weaponOwner;
                 damagable.Damage(data);
             }
         }

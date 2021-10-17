@@ -40,7 +40,7 @@ namespace RPG
             if (currentHitPoints <= 0 || isInvulnerable)
                 return;
 
-            Vector3 distanceToAttacker = data.damageSource - transform.position;
+            Vector3 distanceToAttacker = data.damageSource.transform.position - transform.position;
             distanceToAttacker.y = 0;
 
             if(Vector3.Angle(transform.forward,distanceToAttacker) > hitAngle * 0.5f)
@@ -56,7 +56,7 @@ namespace RPG
             for(int i = 0; i < onDamageMessageReceivers.Count; i++)
             {
                 var messageReceiver = onDamageMessageReceivers[i] as IMessageReceiver;
-                messageReceiver.OnReceiveMessage(messageType);
+                messageReceiver.OnReceiveMessage(messageType, this, data);
             }
 
         }

@@ -3362,6 +3362,7 @@ GameObject:
   - component: {fileID: 8170102240718167347}
   - component: {fileID: 7477294248702543886}
   - component: {fileID: 2334272971492629390}
+  - component: {fileID: 3720481839857862581}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3515,6 +3516,19 @@ MonoBehaviour:
   onDamageMessageReceivers: []
   isInvulnerable: 0
   invulnerabilityTime: 0.5
+--- !u!114 &3720481839857862581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6482238795653368403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8f8aca244a033548965b3f4c47a7af2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  acceptedQuests: []
 --- !u!1 &6482240788135377035
 GameObject:
   m_ObjectHideFlags: 0

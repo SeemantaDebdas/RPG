@@ -4320,6 +4320,7 @@ MonoBehaviour:
   hitAngle: 90
   onDamageMessageReceivers:
   - {fileID: 5403748826103865059}
+  - {fileID: 0}
   isInvulnerable: 0
   invulnerabilityTime: 0.5
 --- !u!114 &6082152205460916499

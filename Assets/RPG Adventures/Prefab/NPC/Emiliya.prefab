@@ -16,12 +16,16 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -1517762398526801932, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
+      propertyPath: dialogue.postInteractionText
+      value: Is there anything else I can help you with?
+      objectReference: {fileID: 0}
+    - target: {fileID: -1517762398526801932, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
       propertyPath: dialogue.queries.Array.data[0].text
       value: I've heard there are some Bandits lurking around here
       objectReference: {fileID: 0}
     - target: {fileID: -1517762398526801932, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
       propertyPath: dialogue.queries.Array.data[1].text
-      value: None of your business.
+      value: Goodbye
       objectReference: {fileID: 0}
     - target: {fileID: -1517762398526801932, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
       propertyPath: dialogue.queries.Array.data[0].answer.text
@@ -29,11 +33,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -1517762398526801932, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
       propertyPath: dialogue.queries.Array.data[1].answer.text
-      value: How rude! Get Lost!
+      value: Farewell!
+      objectReference: {fileID: 0}
+    - target: {fileID: -1517762398526801932, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
+      propertyPath: dialogue.queries.Array.data[1].isAlwaysAsked
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -1517762398526801932, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
       propertyPath: dialogue.queries.Array.data[0].answer.questID
-      value: q-2
+      value: q-1
       objectReference: {fileID: 0}
     - target: {fileID: -1517762398526801932, guid: 5a5cde61361974e4f896fb79c56fd5bf, type: 3}
       propertyPath: dialogue.queries.Array.data[1].answer.forceDialogueQuit

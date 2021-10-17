@@ -48,24 +48,12 @@ namespace RPG {
             weapon.SetOwner(this.gameObject);
         }
 
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-            
-        }
-
         private void FixedUpdate()
         {
             HandleMovement();
             HandleRotation();
-            HandleGravity();
             HandleAttack();
+            HandleGravity();
         }
 
         private void OnAnimatorMove()
