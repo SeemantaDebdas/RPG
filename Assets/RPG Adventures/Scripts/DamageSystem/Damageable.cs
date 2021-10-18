@@ -23,7 +23,7 @@ namespace RPG
 
         private void Awake()
         {
-            currentHitPoints = maxHitPoints;
+            SetInitialHealth();
             if((effectedLayerMask & 1 << this.gameObject.layer) != 0) {
                 onDamageMessageReceivers.Add(FindObjectOfType<QuestManager>());
                 onDamageMessageReceivers.Add(FindObjectOfType<PlayerStats>());
@@ -68,6 +68,11 @@ namespace RPG
                 messageReceiver.OnReceiveMessage(messageType, this, data);
             }
 
+        }
+
+        public void SetInitialHealth()
+        {
+            currentHitPoints = maxHitPoints;
         }
 
 #if UNITY_EDITOR

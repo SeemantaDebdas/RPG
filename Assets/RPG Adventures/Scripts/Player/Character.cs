@@ -12,6 +12,8 @@ namespace RPG {
             }
         }
 
+        public bool IsRespawning { get { return isRespawning; } }
+
         static Character instance;
 
         [SerializeField] Weapon weapon;
@@ -24,6 +26,7 @@ namespace RPG {
 
         HudManager hudManager;
         CharacterController controller;
+        Damageable damagable;
         CinemachineCam cinemachineCam;
         CharacterInput input;
         Animator anim;
@@ -39,6 +42,16 @@ namespace RPG {
 
         readonly int speedFloat = Animator.StringToHash("SpeedFloat");
         readonly int attackTrigger = Animator.StringToHash("AttackTrigger");
+        readonly int deathTrigger = Animator.StringToHash("DeathTrigger");
+        readonly int blockInputTag = Animator.StringToHash("BlockInput");
+
+        AnimatorStateInfo currentAnimation;
+        AnimatorStateInfo nextAnimation;
+        bool isTransitioning;
+
+        bool isRespawning;
+
+        bool inputBlocked;
 
         private void Awake()
         {
@@ -48,12 +61,13 @@ namespace RPG {
             input = GetComponent<CharacterInput>();
             anim = GetComponent<Animator>();
             cinemachineCam = Camera.main.GetComponent<CinemachineCam>();
+            damagable = GetComponent<Damageable>();
         }
 
         private void Start()
         {
             hudManager = FindObjectOfType<HudManager>();
-            hudManager.SetMaxHealth(GetComponent<Damageable>().maxHitPoints);
+            hudManager.SetMaxHealth(damagable.maxHitPoints);
         }
 
         private void FixedUpdate()
@@ -62,10 +76,14 @@ namespace RPG {
             HandleRotation();
             HandleAttack();
             HandleGravity();
+
+            CacheAnimation();
+            ProcessBlockInput();
         }
 
         private void OnAnimatorMove()
         {
+            if (isRespawning) return;
             Vector3 movement = anim.deltaPosition;
             movement += currentVerticalSpeed * Vector3.up * Time.fixedDeltaTime;
             controller.Move(movement);
@@ -159,6 +177,38 @@ namespace RPG {
             {
                 hudManager.SetHealth((damageable as Damageable).currentHitPoints);
             }
+            else if(type == MessageType.Dead)
+            {
+                anim.SetTrigger(deathTrigger);
+                hudManager.SetHealth(0);
+                isRespawning = true;
+            }
+        }
+
+        void CacheAnimation()
+        {
+            currentAnimation = anim.GetCurrentAnimatorStateInfo(0);
+            nextAnimation = anim.GetNextAnimatorStateInfo(0);
+            isTransitioning = anim.IsInTransition(0);
+        }
+
+        void ProcessBlockInput()
+        {
+            inputBlocked = currentAnimation.tagHash == blockInputTag && !isTransitioning;
+            inputBlocked |= nextAnimation.tagHash == blockInputTag;
+            input.IsInputBlocked = inputBlocked;
+        }
+
+        public void StartRespawn()
+        {
+            transform.position = Vector3.zero;
+            hudManager.SetMaxHealth(damagable.maxHitPoints);
+            damagable.SetInitialHealth();
+        }
+
+        public void FinishRespawn()
+        {
+            isRespawning = false;
         }
     }
 }

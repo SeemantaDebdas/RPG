@@ -49,6 +49,12 @@ namespace RPG {
         // Update is called once per frame
         void Update()
         {
+            if (Character.Instance.IsRespawning)
+            {
+                ReturnToOriginalPosition();
+                IsNearBase();
+                return;
+            }
 
             var target = HandleTarget(); 
             var isNearBase = IsNearBase();
@@ -129,6 +135,13 @@ namespace RPG {
         {
             enemyController.SetDestination(followTarget.transform.position);
             enemyController.anim.SetBool(ReturnBool, false);
+        }
+
+        void ReturnToOriginalPosition()
+        {
+            followTarget = null;
+            enemyController.anim.SetBool(ReturnBool, true);
+            enemyController.SetDestination(originPosition);
         }
 
         private void ResetRotation()
