@@ -16,8 +16,12 @@ namespace RPG {
 
         static Character instance;
 
+        [Header("Weapon")]
         [SerializeField] Weapon weapon;
         [SerializeField] Transform handTransform;
+
+        [Header("Audio")]
+        [SerializeField] RandomAudioPlayer footstepSound;
 
         [Header("General Parameters")]
         [SerializeField] float playerMoveSpeed;
@@ -41,6 +45,7 @@ namespace RPG {
         float accMultiplier;
 
         readonly int speedFloat = Animator.StringToHash("SpeedFloat");
+        readonly int footFall = Animator.StringToHash("FootFall");
         readonly int attackTrigger = Animator.StringToHash("AttackTrigger");
         readonly int deathTrigger = Animator.StringToHash("DeathTrigger");
         readonly int blockInputTag = Animator.StringToHash("BlockInput");
@@ -79,6 +84,7 @@ namespace RPG {
 
             CacheAnimation();
             ProcessBlockInput();
+            PlayFootstepSound();
         }
 
         private void OnAnimatorMove()
@@ -209,6 +215,25 @@ namespace RPG {
         public void FinishRespawn()
         {
             isRespawning = false;
+        }
+
+        void PlayFootstepSound()
+        {
+            float footFallCurve = anim.GetFloat(footFall);
+            if(footFallCurve>0.1f && !footstepSound.isPlaying && footstepSound.canPlay)
+            {
+                footstepSound.isPlaying = true;
+                footstepSound.canPlay = false;
+                footstepSound.PlayRandomClip();
+            }
+            else if(footstepSound.isPlaying)
+            {
+                footstepSound.isPlaying = false;
+            }
+            else if(footFallCurve<0.1f && !footstepSound.canPlay)
+            {
+                footstepSound.canPlay = true;
+            }
         }
     }
 }

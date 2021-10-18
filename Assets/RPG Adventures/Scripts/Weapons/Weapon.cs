@@ -23,6 +23,9 @@ namespace RPG
         public int weaponDamage;
         GameObject weaponOwner;
 
+        [SerializeField] RandomAudioPlayer swingSound;
+        [SerializeField] RandomAudioPlayer impactSound;
+
         private void FixedUpdate()
         {
             if (isAttacking)
@@ -81,6 +84,8 @@ namespace RPG
                 data.damager = this;
                 data.damageSource = weaponOwner;
                 damagable.Damage(data);
+
+                impactSound.PlayRandomClip();
             }
         }
 
@@ -97,6 +102,8 @@ namespace RPG
                 originAttackPos[i] = 
                     ap.rootTransform.position + ap.rootTransform.TransformDirection(ap.offset);
             }
+
+            swingSound.PlayRandomClip();
 
         }
 
