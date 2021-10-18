@@ -22,6 +22,7 @@ namespace RPG {
         [SerializeField] float playerRotationSpeed;
         [SerializeField] float gravity = 10f;
 
+        HudManager hudManager;
         CharacterController controller;
         CinemachineCam cinemachineCam;
         CharacterInput input;
@@ -47,6 +48,12 @@ namespace RPG {
             input = GetComponent<CharacterInput>();
             anim = GetComponent<Animator>();
             cinemachineCam = Camera.main.GetComponent<CinemachineCam>();
+        }
+
+        private void Start()
+        {
+            hudManager = FindObjectOfType<HudManager>();
+            hudManager.SetMaxHealth(GetComponent<Damageable>().maxHitPoints);
         }
 
         private void FixedUpdate()
@@ -150,8 +157,7 @@ namespace RPG {
         {
             if(type == MessageType.Damaged)
             {
-                Debug.Log("Damaged");
-                Debug.Log((damageable as Damageable).currentHitPoints);
+                hudManager.SetHealth((damageable as Damageable).currentHitPoints);
             }
         }
     }
