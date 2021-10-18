@@ -64,6 +64,11 @@ namespace RPG
             this.weaponOwner = weaponOwner;
         }
 
+        public void SetTargetLayer(LayerMask targetLayer)
+        {
+            this.targetLayers = targetLayer;
+        }
+
         void CheckDamage(Collider other, AttackPoints ap)
         {
             if ((targetLayers.value & 1<<other.gameObject.layer) == 0) return;

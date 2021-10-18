@@ -16,6 +16,8 @@ namespace RPG {
         Character followTarget;
         EnemyController enemyController;
 
+        public Weapon weapon;
+
         Vector3 originPosition;
         Quaternion originalRotation;
         float timeSinceLostTarget;
@@ -34,6 +36,9 @@ namespace RPG {
             enemyController = GetComponent<EnemyController>();
             originPosition = transform.position;
             originalRotation = transform.rotation;
+
+            weapon.SetOwner(gameObject);
+            weapon.SetTargetLayer(1 << Character.Instance.gameObject.layer);
         }
 
         private void Start()
@@ -169,9 +174,13 @@ namespace RPG {
             enemyController.anim.SetTrigger(DeathTrigger);
         }
 
-        public void MeleeAttackStart(){}
+        public void MeleeAttackStart(){
+            weapon.BeginAttack();
+        }
 
-        public void MeleeAttackStop(){}
+        public void MeleeAttackStop(){
+            weapon.StopAttack();
+        }
 
 #if UNITY_EDITOR
         private void OnDrawGizmosSelected()

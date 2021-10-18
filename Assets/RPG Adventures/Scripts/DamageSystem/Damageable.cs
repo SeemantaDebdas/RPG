@@ -7,7 +7,7 @@ namespace RPG
     public partial class Damageable : MonoBehaviour
     {
         [SerializeField] int maxHitPoints;
-        int currentHitPoints;
+        public int currentHitPoints;
         [Range(0, 360f)]
         public float hitAngle;
         public List<MonoBehaviour> onDamageMessageReceivers;

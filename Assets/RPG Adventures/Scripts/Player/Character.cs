@@ -2,7 +2,7 @@ using UnityEngine;
 using Cinemachine;
 
 namespace RPG { 
-    public class Character : MonoBehaviour,IAttackAnimListener
+    public class Character : MonoBehaviour,IAttackAnimListener,IMessageReceiver
     {
         public static Character Instance
         {
@@ -120,12 +120,14 @@ namespace RPG {
 
         public void MeleeAttackStart()
         {
-            weapon.BeginAttack();
+            if(weapon!=null)
+                weapon.BeginAttack();
         }
 
         public void MeleeAttackStop()
         {
-            weapon.StopAttack();
+            if (weapon != null)
+                weapon.StopAttack();
         }
 
         public void EquipWeapon(InventorySlot slot)
@@ -142,6 +144,15 @@ namespace RPG {
             weapon.SetOwner(this.gameObject);
             weapon.name = slot.item.name;
             weapon.GetComponent<FixedUpdateFollow>().SetFollowTransform(handTransform);
+        }
+
+        public void OnReceiveMessage(MessageType type, object damageable, object message)
+        {
+            if(type == MessageType.Damaged)
+            {
+                Debug.Log("Damaged");
+                Debug.Log((damageable as Damageable).currentHitPoints);
+            }
         }
     }
 }

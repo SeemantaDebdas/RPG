@@ -3513,9 +3513,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87d032f96ca348147a6e338cb673e8b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHitPoints: 0
-  hitAngle: 0
-  onDamageMessageReceivers: []
+  maxHitPoints: 500
+  currentHitPoints: 0
+  hitAngle: 360
+  onDamageMessageReceivers:
+  - {fileID: 4993302124882812029}
   isInvulnerable: 0
   invulnerabilityTime: 0.5
   experience: 0
